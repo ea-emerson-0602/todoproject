@@ -21,4 +21,5 @@ tzdata==2024.2
 uvicorn==0.34.0
 virtualenv==20.28.0
 virtualenvwrapper-win==1.2.7
+waitress==3.0.2
 whitenoise==6.9.0
