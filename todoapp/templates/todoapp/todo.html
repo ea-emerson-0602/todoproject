@@ -16,6 +16,15 @@
     />
 
     <title>Todo App</title>
+
+    <style>
+      /* Custom Mobile Styling */
+      @media (max-width: 576px) {
+        .small-text {
+          font-size: 0.9rem; /* Reduce text size on small screens */
+        }
+      }
+    </style>
   </head>
   <body>
     <section class="vh-100" style="background-color: #eee">
@@ -24,7 +33,10 @@
           <div class="col col-lg-9 col-xl-7">
             <div class="card rounded-3">
               <div class="card-body p-4">
-                <h4 class="text-center my-3 pb-3">To Do App</h4>
+                <!-- Responsive Title -->
+                <h4 class="text-center my-3 pb-3 fw-bold fs-4 small-text">
+                  To Do App
+                </h4>
 
                 <form
                   method="POST"
@@ -36,50 +48,57 @@
                       <input
                         type="text"
                         id="form1"
-                        class="form-control"
+                        class="form-control small-text"
                         name="task"
                         placeholder="Enter a task here"
                       />
                     </div>
                   </div>
                   <div class="col-12">
-                    <button type="submit" class="btn btn-primary">
+                    <!-- Smaller Button on Mobile -->
+                    <button type="submit" class="btn btn-primary btn-sm">
                       Add Task
                     </button>
                   </div>
                 </form>
-                <a href="{%url 'logout'%}">
-                    <button type="submit" class="btn btn-danger">
-                     Logout
-                    </button>
-                  </a>
+
+                <!-- Logout Button -->
+                <a href="{% url 'logout' %}">
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Logout
+                  </button>
+                </a>
+
                 <table class="table mb-4">
                   <thead>
                     <tr>
-                      <th scope="col">Todo item</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Actions</th>
+                      <th scope="col" class="small-text">Todo item</th>
+                      <th scope="col" class="small-text">Status</th>
+                      <th scope="col" class="small-text">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for todo in todos %}
                     <tr>
-                      <td>{{ todo.todo_name }}</td>
-                      <td>
+                      <td class="small-text">{{ todo.todo_name }}</td>
+                      <td class="small-text">
                         {% if todo.status %}Completed{% else %}In progress
-                        {% endif%}
+                        {% endif %}
                       </td>
                       <td>
-                        <a href="{%url 'delete' todo.todo_name%}">
-                          <button type="submit" class="btn btn-danger">
+                        <a href="{% url 'delete' todo.todo_name %}">
+                          <button type="submit" class="btn btn-danger btn-sm">
                             Delete
                           </button>
                         </a>
-                        <a href="{%url 'update' todo.todo_name%}">
-                          <button type="submit" class="btn btn-success ms-1">
+                        <a href="{% url 'update' todo.todo_name %}">
+                          <button
+                            type="submit"
+                            class="btn btn-success btn-sm ms-1"
+                          >
                             Finished
                           </button>
-                        </a> 
+                        </a>
                       </td>
                     </tr>
                     {% endfor %}

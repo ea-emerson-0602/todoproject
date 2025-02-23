@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -86,3 +87,33 @@ def update_task(request, name):
     get_todo.status=True
     get_todo.save()
     return redirect('homepage')
+
+def resetpage(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        passwordconfirm = request.POST.get("passwordconfirm")
+
+        try:
+            user = User.objects.get(username=username)  # Check if user exists
+        except User.DoesNotExist:
+            messages.error(request, "User does not exist!")
+            return redirect("reset")
+
+        if len(password)<5:
+            messages.error(request, "Password must be at least 5 characters")
+            return redirect("reset")
+
+        # Check if passwords match
+        if password != passwordconfirm:
+            messages.error(request, "Passwords do not match!")
+            return redirect("reset")
+
+        # Reset password
+        user.set_password(password)
+        user.save()
+
+        messages.success(request, "Password reset successful! You can now log in.")
+        return redirect("login")
+
+    return render(request, "todoapp/reset.html", {})
