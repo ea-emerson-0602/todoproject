@@ -19,3 +19,4 @@ venv/
 # Ignore static and media files (optional)
 staticfiles/
 media/
+".env" 
