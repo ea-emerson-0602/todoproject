@@ -66,9 +66,9 @@ def loginpage(request):
         if validate_user is not None:
             login(request, validate_user)
             return redirect("homepage")
-        else:
-            messages.error(request, "Wrong credentials, or user does not exist")
-            return redirect("login")
+ 
+        messages.error(request, "Wrong credentials, or user does not exist")
+        return redirect("login")
         
     return render(request, "todoapp/login.html", {})
 

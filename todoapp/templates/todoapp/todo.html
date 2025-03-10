@@ -37,7 +37,9 @@
                 <h4 class="text-center my-3 pb-3 fw-bold fs-4 small-text">
                   To Do App
                 </h4>
-
+                {% if messages %} {% for message in messages %}
+                <p class="text-center" style="color: #b22222">{{message}}</p>
+                {% endfor %} {% endif %}
                 <form
                   method="POST"
                   class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"

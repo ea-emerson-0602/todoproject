@@ -11,9 +11,11 @@
     <div class="wrapper">
       <h2>Reset password</h2>
       <br />
-      {% if messages %} {% for message in messages %}
-      <h2 style="color: #b22222">{{message}}</h2>
-      {% endfor %} {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          <h4 class="text-center" style="color: #b22222">{{message}}</h4>
+        {% endfor %}
+      {% endif %}
       <form action="#" method="POST" autocomplete="off">
         {% csrf_token %}
         <div class="input-box">
