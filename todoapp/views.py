@@ -9,16 +9,18 @@ from .models import todo
 
 @login_required
 def home(request):
-    if request.method=="POST":
-        task=request.POST.get("task")
-        new_todo=todo(user=request.user, todo_name=task)
+    if request.method == "POST":
+        task = request.POST.get("task")
+        if not task or len(task) < 2:
+            messages.error(request, "Enter a valid string!")
+            return redirect("homepage")  # Make sure this is the correct redirect
+
+        new_todo = todo(user=request.user, todo_name=task)
         new_todo.save()
-        
-    all_todos=todo.objects.filter(user=request.user)
-    context={
-        'todos':all_todos,
-    }
-    return render(request, "todoapp/todo.html",context)
+
+    all_todos = todo.objects.filter(user=request.user)
+    context = {"todos": all_todos}
+    return render(request, "todoapp/todo.html", context)
 
 def register(request):
     if request.user.is_authenticated:
@@ -76,17 +78,19 @@ def logoutuser(request):
     return redirect("login")
 
 @login_required
-def delete_task(request, name):
-    get_todo=todo.objects.get(user=request.user, todo_name=name)
+def delete_task(request, id):
+    get_todo = get_object_or_404(todo, user=request.user, id=id)
     get_todo.delete()
     return redirect("homepage")
 
+
 @login_required
-def update_task(request, name):
-    get_todo=todo.objects.get(user=request.user, todo_name=name)
-    get_todo.status=True
+def update_task(request, id):
+    get_todo = get_object_or_404(todo, user=request.user, id=id)
+    get_todo.status = True  # Assuming there's a status field
     get_todo.save()
-    return redirect('homepage')
+    return redirect("homepage")
+
 
 def resetpage(request):
     if request.method == "POST":
