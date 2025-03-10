@@ -11,9 +11,9 @@ from .models import todo
 def home(request):
     if request.method=="POST":
         task=request.POST.get("task")
-	    if len(task) < 1:
-	    	messages.error(request, "Please input a task")
-	    	return redirect('')
+	if len(task) < 1:
+	    messages.error(request, "Please input a task")
+	    return redirect('')
 	new_todo=todo(user=request.user, todo_name=task)
 	new_todo.save()
         
