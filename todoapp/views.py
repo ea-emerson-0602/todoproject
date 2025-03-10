@@ -14,8 +14,8 @@ def home(request):
 	    if len(task) < 1:
 	    	messages.error(request, "Please input a task")
 	    	return redirect('')
-		new_todo=todo(user=request.user, todo_name=task)
-		new_todo.save()
+	new_todo=todo(user=request.user, todo_name=task)
+	new_todo.save()
         
     all_todos=todo.objects.filter(user=request.user)
     context={
